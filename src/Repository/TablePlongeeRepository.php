@@ -32,8 +32,19 @@ class TablePlongeeRepository extends ServiceEntityRepository
     }
 
     public function findInfos ($id) {
-
         $eM = $this->getEntityManager();
+
+        $query = $eM->createQueryBuilder();
+        
+        $query->select('t.id')
+            ->from('App\Entity\TablePlongee', 't')
+            ->where('t.id = :id')
+            ->setParameter('id', $id);
+        
+        if (!$query->getQuery()->getResult(Query::HYDRATE_ARRAY)) {
+            return NULL;
+        }
+
         $query = $eM->createQueryBuilder();
 
         $tableInfos = array();
