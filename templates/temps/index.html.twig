@@ -1,0 +1,10 @@
+{% extends "base.html.twig" %}
+
+{% set page_title = 'temps' %}
+
+{% block body %}
+    {% for t in temps %}
+        <span>{{ t.id }} : {{ t.temps }}</span>
+        <br>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "base.html.twig" %}
+
+{% set page_title = 'tables' %}
+
+{% block body %}
+    {% for table in tables %}
+        <span>{{ table.id }} : {{ table.nom }}</span>
+        <br>
+    {% endfor %}
+{% endblock %}
