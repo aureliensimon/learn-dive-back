@@ -48,7 +48,6 @@ class TablePlongeeRepository extends ServiceEntityRepository
         $query = $eM->createQueryBuilder();
 
         $tableInfos = array();
-        $tableInfos['profondeurs'] = array();
         
         $query->select('p.id, p.profondeur')
             ->from('App\Entity\Profondeur', 'p')
@@ -67,10 +66,8 @@ class TablePlongeeRepository extends ServiceEntityRepository
                 ->where('t.profondeur_id = :id')
                 ->setParameter('id', $currentProfondeurID);
 
-            array_push($tableInfos['profondeurs'], array('profondeur' => $profondeur['profondeur'], 'temps' => $query->getQuery()->getResult(Query::HYDRATE_ARRAY)));
+            array_push($tableInfos, array('profondeur' => $profondeur['profondeur'], 'temps' => $query->getQuery()->getResult(Query::HYDRATE_ARRAY)));
         }
-
-        $tableInfos['table_id'] = $id;
 
         return $tableInfos;
     }
