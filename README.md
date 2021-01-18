@@ -24,7 +24,7 @@ Récupérer les infos d'une table précise présente dans la base de données
 |       id  | int  | id de la table      |
 
 
-# GET les infos d'une table précise
+# GET un profil de plongée
 
 ```GET /api/table/id```
 
