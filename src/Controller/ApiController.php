@@ -114,7 +114,7 @@ class ApiController extends AbstractController {
         $tempsDescente = $pr / $vitesse_descente;
         $volume_total = $volume_bouteille * $pression_remplissage;
         $volumeRestant = $volume_total - (($tempsDescente * $consoMoyenne) + ($dp * $consoProfondeur)) * $respiration_moyenne;
-        $pressionRestante = $volume_total / $volume_bouteille;
+        $pressionRestante = $volumeRestant / $volume_bouteille;
 
         $res = array();
         $res['tempsTotalDeRemontee'] = $dtr;
