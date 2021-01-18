@@ -121,11 +121,11 @@ class ApiController extends AbstractController {
         $res['tempsTotalDePlongee'] = $dtp;
         $res['volumeRestant'] = round($volumeRestant);
         $res['pressionRestante'] = round($pressionRestante);
-        $res['paliers3'] = $paliers['palier3'];
-        $res['paliers6'] = $paliers['palier6'];
-        $res['paliers9'] = $paliers['palier9'];
-        $res['paliers12'] = $paliers['palier12'];
-        $res['paliers15'] = $paliers['palier15'];
+        $res['palier3'] = $paliers['palier3'];
+        $res['palier6'] = $paliers['palier6'];
+        $res['palier9'] = $paliers['palier9'];
+        $res['palier12'] = $paliers['palier12'];
+        $res['palier15'] = $paliers['palier15'];
 
         $response = new Response();
 
