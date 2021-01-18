@@ -1,0 +1,29 @@
+{% extends "base.html.twig" %}
+
+{% set page_title = 'tables' %}
+
+{% block body %}
+    <div class="homepage-main">
+        <div class="homepage-content">
+            <div class="homepage-title-box">
+                <p class="homepage-title">LEARN</p>
+                <p class="homepage-title">DIVE</p>
+                <p class="homepage-subtitle">la référence de la plongée</p>
+            </div>
+            <div class="homepage-redirection-buttons">
+                <span class="homepage-redirection-buttons-title">Configurer les différents éléments</span>
+                <div class="homepage-redirection-buttons-box">
+                    <a class="homepage-redirection-button" href="{{ path('table_show') }}">
+                        Tables
+                    </a>
+                    <a class="homepage-redirection-button" href="{{ path('profondeur_show') }}">
+                        Profondeurs
+                    </a>
+                    <a class="homepage-redirection-button" href="{{ path('temps_show') }}">
+                        Temps
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

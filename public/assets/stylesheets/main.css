@@ -174,3 +174,62 @@ body {
     display: flex;
     justify-content: space-between;
 }
+
+.homepage-main {
+    background-color: #7764ca;
+    width: 100%;
+    height:100vh;
+}
+
+.homepage-content {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20vh 0px;
+    display: flex;
+    justify-content: space-between;
+}
+.homepage-title-box {
+    width: 65%;
+}
+.homepage-redirection-buttons {
+    width: 35%;
+    text-align: center;
+}
+.homepage-title {
+    color: white;
+    font-weight: 700;
+    font-size: 150px;
+}
+.homepage-subtitle {
+    color: white;
+    opacity: 0.6;
+    font-size: 25px;
+}
+.homepage-redirection-buttons-title {
+    color: white;
+    font-size: 25px;
+}
+.homepage-redirection-buttons-box {
+    margin-top: 75px;
+    display: flex;
+    flex-direction: column;
+}
+.homepage-redirection-button {
+    width: 100%;
+    text-decoration: none;
+    background-color: white;
+    color: black;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 15px;
+    border: 2px solid white;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.15), 
+    0 2px 2px rgba(0,0,0,0.15), 
+    0 4px 4px rgba(0,0,0,0.15), 
+    0 8px 8px rgba(0,0,0,0.15);
+}
+.homepage-redirection-button:hover {
+    color: white;
+    background-color: #7764ca;
+    cursor: pointer;
+}

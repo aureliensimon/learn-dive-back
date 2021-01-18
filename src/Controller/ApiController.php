@@ -110,8 +110,8 @@ class ApiController extends AbstractController {
         $dtp = $dp + $dtr;
 
         $res = array();
-        $res['temps-total-de-remontee'] = $dtr;
-        $res['temps-total-de-plongee'] = $dtp;
+        $res['tempsTotalDeRemontee'] = $dtr;
+        $res['tempsTotalDePlongee'] = $dtp;
         $res['paliers'] = $paliers;
 
         $response = new Response();
