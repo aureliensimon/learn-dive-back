@@ -16,13 +16,40 @@ class TempsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('temps', NumberType::class)
-            ->add('palier3', NumberType::class)
-            ->add('palier6', NumberType::class)
-            ->add('palier9', NumberType::class)
-            ->add('palier12', NumberType::class)
-            ->add('palier15', NumberType::class)
+            ->add('temps', NumberType::class, [
+                'attr' => [
+                    'class' => 'textinput',    
+                ],
+            ])
+            ->add('palier3', NumberType::class, [
+                'attr' => [
+                    'class' => 'textinput',    
+                ],
+            ])
+            ->add('palier6', NumberType::class, [
+                'attr' => [
+                    'class' => 'textinput',    
+                ],
+            ])
+            ->add('palier9', NumberType::class, [
+                'attr' => [
+                    'class' => 'textinput',    
+                ],
+            ])
+            ->add('palier12', NumberType::class, [
+                'attr' => [
+                    'class' => 'textinput',    
+                ],
+            ])
+            ->add('palier15', NumberType::class, [
+                'attr' => [
+                    'class' => 'textinput',    
+                ],
+            ])
             ->add('profondeur_id', EntityType::Class, [
+                'attr' => [
+                    'class' => 'textinput',    
+                ],
                 'class' => Profondeur::Class,
                 'choice_label' => function ($profondeur) {
                     return $profondeur->getProfondeur();

@@ -3,8 +3,47 @@
 {% set page_title = 'temps' %}
 
 {% block body %}
+    <div class="title-name">
+        <span>Liste des palliers associés à leur temps :</span>
+        <a class="add-button" href="{{ path('temps_create')  }}">+</a>
+    </div>
+
+    <div class="table-container">
     {% for t in temps %}
-        <span>{{ t.id }} : {{ t.temps }}</span>
-        <br>
+        <div class="layout-container">
+            <div class="table-layout-part table-layout-part-id">
+                <span>{{ t.id }}</span>
+                <span class="tooltip">id</span>
+            </div>
+            <div class="table-layout-part table-layout-part-id">
+                <span>{{ t.temps }}</span>
+                <span class="tooltip">temps</span>
+            </div>
+            <div class="table-layout-part table-layout-part-id">
+                <span>{{ t.palier3 }}</span>
+                <span class="tooltip">Palier 3m</span>
+            </div>
+            <div class="table-layout-part table-layout-part-id">
+                <span>{{ t.palier6 }}</span>
+                <span class="tooltip">Palier 6m</span>
+            </div>
+            <div class="table-layout-part table-layout-part-id">
+                <span>{{ t.palier9 }}</span>
+                <span class="tooltip">Palier 9m</span>
+            </div>
+            <div class="table-layout-part table-layout-part-id">
+                <span>{{ t.palier12 }}</span>
+                <span class="tooltip">Palier 12m</span>
+            </div>
+            <div class="table-layout-part table-layout-part-id">
+                <span>{{ t.palier15 }}</span>
+                <span class="tooltip">Palier 15m</span>
+            </div>
+            <div class="actions">
+                <a class="action" href="{{path('temps_edit', {target: t.id})}}">✏️</a>
+                <a class="action" href="{{path('temps_delete', {target: t.id})}}">🗑️</a>
+            </div>
+        </div>
     {% endfor %}
+    </div>
 {% endblock %}

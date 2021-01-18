@@ -3,8 +3,28 @@
 {% set page_title = 'tables' %}
 
 {% block body %}
+
+    <div class="title-name">
+        <span>Tables de plongée :</span>
+        <a class="add-button" href="{{path('table_create')}}">+</a>
+    </div>
+
+    <div class="table-container">
     {% for table in tables %}
-        <span>{{ table.id }} : {{ table.nom }}</span>
-        <br>
+        <div class="layout-container">
+            <div class="table-layout-part table-layout-part-id">
+                <span>{{ table.id }}</span>
+                <span class="tooltip">id</span>
+            </div>
+            <div class="table-layout-part table-layout-part-id">
+                <span>{{ table.nom }}</span>
+                <span class="tooltip">nom de la table</span>
+            </div>
+            <div class="actions">
+                <a class="action" href="{{path('table_edit', {target: table.id})}}">✏️</a>
+                <a class="action" href="{{path('table_delete', {target: table.id})}}">🗑️</a>
+            </div>
+        </div>
     {% endfor %}
+    </div>
 {% endblock %}

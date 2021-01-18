@@ -81,5 +81,44 @@ class TempsController extends AbstractController {
         ]); 
     }
 
+    /**
+    * @Route("/edit/{target}", name="edit")
+    */
+    public function edit ($target, Request $request) {
+
+        $target_element = $this->getDoctrine()
+                            ->getRepository(Temps::class)
+                            ->find($target);
+
+        $form = $this->createForm(TempsType::class, $target_element);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $tempsFormData = $form->getData();
+
+            $newTemps = new Temps();
+
+            $newTemps->setTemps($tempsFormData->getTemps());
+            
+            $newTemps->setPalier3($tempsFormData->getPalier3());
+            $newTemps->setPalier6($tempsFormData->getPalier6());
+            $newTemps->setPalier9($tempsFormData->getPalier9());
+            $newTemps->setPalier12($tempsFormData->getPalier12());
+            $newTemps->setPalier15($tempsFormData->getPalier15());
+
+            $newTemps->setProfondeurId($tempsFormData->getProfondeurId());
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($newTemps);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('temps_show');
+        }
+
+        return $this->render('temps/form.html.twig', [
+            'form' => $form->createView(),
+        ]); 
+    }
+
 
 }

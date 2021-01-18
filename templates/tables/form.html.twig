@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+
+{% set page_title = 'Ajout temps' %}
+
+{% block body %}
+    <div class="form">
+        {{ form_start(form)}}
+        <div class="form-category">
+            <p class="form-category-title">Nom :</p>
+            {{ form_widget(form.nom) }}
+        </div>
+        <button class="submit-button" type="submit">Envoyer</button>
+        {{form_rest(form) }}
+        {{ form_end(form)}}
+    </div>
+{% endblock %}

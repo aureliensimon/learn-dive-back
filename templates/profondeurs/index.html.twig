@@ -1,0 +1,29 @@
+{% extends "base.html.twig" %}
+
+{% set page_title = 'tables' %}
+
+{% block body %}
+    <div class="title-name">
+        <span>Liste des profondeurs :</span>
+        <a class="add-button" href="{{ path('profondeur_create')  }}">+</a>
+    </div>
+
+    <div class="table-container">
+    {% for profondeur in profondeurs %}
+        <div class="layout-container">
+            <div class="table-layout-part table-layout-part-id">
+                <span>{{ profondeur.id }}</span>
+                <span class="tooltip">id</span>
+            </div>
+            <div class="table-layout-part table-layout-part-id">
+                <span>{{ profondeur.profondeur }}</span>
+                <span class="tooltip">profondeur</span>
+            </div>
+            <div class="actions">
+                <a class="action" href="{{path('profondeur_edit', {target: profondeur.id})}}">✏️</a>
+                <a class="action" href="{{path('profondeur_delete', {target: profondeur.id})}}">🗑️</a>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}
