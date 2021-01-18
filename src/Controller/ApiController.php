@@ -67,8 +67,8 @@ class ApiController extends AbstractController {
     public function calcul () {
 
         // VARS (GET FROM FORM)
-        $volume_bouteille = 18;
-        $pression_remplissage = 200;
+        $volume_bouteille = $_GET['volumeBouteille'];
+        $pression_remplissage =  $_GET['pressionRemplissage'];
         $pr = $_GET['profondeur'];
         $dp = $_GET['dureePlongee'];
         $tableID = $_GET['table'];
@@ -109,9 +109,18 @@ class ApiController extends AbstractController {
         $dtr = 1/2 * $nombresPaliers + $sommePaliers + 1/10 * ($pr - $premier_palier);
         $dtp = $dp + $dtr;
 
+        $consoProfondeur = 1 + $pr / 10;
+        $consoMoyenne = (1 + $consoProfondeur) / 2;
+        $tempsDescente = $pr / $vitesse_descente;
+        $volume_total = $volume_bouteille * $pression_remplissage;
+        $volumeRestant = $volume_total - (($tempsDescente * $consoMoyenne) + ($dp * $consoProfondeur)) * $respiration_moyenne;
+        $pressionRestante = $volume_total / $volume_bouteille;
+
         $res = array();
         $res['tempsTotalDeRemontee'] = $dtr;
         $res['tempsTotalDePlongee'] = $dtp;
+        $res['volumeRestant'] = round($volumeRestant);
+        $res['pressionRestante'] = round($pressionRestante);
         $res['paliers'] = $paliers;
 
         $response = new Response();
