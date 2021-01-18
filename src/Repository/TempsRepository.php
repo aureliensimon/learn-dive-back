@@ -27,13 +27,35 @@ class TempsRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findApiByID ($value): ?Temps
+    public function findByProfondeur ($profondeurID, $tempsFond)
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.id = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQueryBuilder();
+        
+        $query->select('t.palier3, t.palier6, t.palier9, t.palier12, t.palier15')
+            ->from('App\Entity\Temps', 't')
+            ->join('App\Entity\Profondeur', 'p', 'WITH', 't.profondeur_id = p.id ')
+            ->where('p.id = :id AND t.temps = :fond')
+            ->setParameter('id', $profondeurID)
+            ->setParameter('fond', $tempsFond);
+
+
+        return $query->getQuery()->getResult();   
+    }
+
+    public function findTempsApproximation ($table, $profondeur, $temps)
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQueryBuilder();
+
+        $query->select('t.palier3, t.palier6, t.palier9, t.palier12, t.palier15')
+            ->from('App\Entity\Temps', 't')
+            ->join('App\Entity\Profondeur', 'p','WITH','t.profondeur_id = p.id')
+            ->where('p.table_plongee_id = :id AND p.profondeur = :profondeur AND t.temps >= :temps')
+            ->setParameter('id', $table)
+            ->setParameter('profondeur', $profondeur)
+            ->setParameter('temps', $temps);
+
+        return $query->getQuery()->getResult();   
     }
 }

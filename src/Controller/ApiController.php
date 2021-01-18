@@ -18,48 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
 * @Route("/api", name="api_")
 */
 class ApiController extends AbstractController {
-    
-    /**
-    * @Route("/profondeurs", name="api_profondeurs")
-    */
-    public function getAllProfondeurs () {
-        $profondeurs = $this->getDoctrine()
-            ->getRepository(Profondeur::class)
-            ->findApiAll();
-
-        $response = new Response();
-    
-        $response->setContent(json_encode($profondeurs));
-        $response->headers->set('Content-Type', 'application/json');
-        $response->headers->set('Access-Control-Allow-Origin', '*');
-        
-        return $response;
-    }
-
-    /**
-    * @Route("/profondeur/{target}", name="api_profondeur")
-    */
-    public function getProfondeur ($target) {
-        $profondeur = $this->getDoctrine()
-            ->getRepository(Profondeur::class)
-            ->findApiByID($target);
-
-        if (!$profondeur) {
-            $data = [
-                'status' => 404,
-                'errors' => "Profondeur not found",
-                ];
-            return new JsonResponse($data);
-        }
-
-        $response = new Response();
-    
-        $response->setContent(json_encode($profondeur));
-        $response->headers->set('Content-Type', 'application/json');
-        $response->headers->set('Access-Control-Allow-Origin', '*');
-        
-        return $response;
-    }
 
     /**
     * @Route("/tables", name="api_tables")
@@ -104,44 +62,65 @@ class ApiController extends AbstractController {
     }
 
     /**
-    * @Route("/temps", name="api_temps")
+    * @Route("/calcul", name="api_calcul", methods={"GET"})
     */
-    public function getAllTemps () {
-        $temps = $this->getDoctrine()
-            ->getRepository(Temps::class)
-            ->findApiAll();
+    public function calcul () {
 
-        $response = new Response();
+        // VARS (GET FROM FORM)
+        $volume_bouteille = 18;
+        $pression_remplissage = 200;
+        $pr = $_GET['profondeur'];
+        $dp = $_GET['dureePlongee'];
+        $tableID = $_GET['table'];
+
+        // SETTINGS
+        $respiration_moyenne = 20;
+        $vitesse_descente = 20;
+        $vitesse_remontee_avant_palier = 10;
+        $vitesse_remontee_apres_palier = 6;
+
+        // PR CHECK
+        $profondeurApproximation = $this->getDoctrine()
+            ->getRepository(Profondeur::class)
+            ->findProfondeurApproximation($tableID, $pr);
     
-        $response->setContent(json_encode($temps));
-        $response->headers->set('Content-Type', 'application/json');
-        $response->headers->set('Access-Control-Allow-Origin', '*');
-        
-        return $response;
-    }
+        $prA = $profondeurApproximation['profondeur'];
+        $prID = $profondeurApproximation['id'];
 
-    /**
-    * @Route("/temps/{target}", name="api_onetemps")
-    */
-    public function getTemps ($target) {
-        $temps = $this->getDoctrine()
+
+        // GET PALIERS
+        $paliers = $this->getDoctrine()
             ->getRepository(Temps::class)
-            ->findApiByID($target);
+            ->findTempsApproximation($tableID, $prA, $dp);
+        $paliers = $paliers[count($paliers) - 1];
+        
+        $nombresPaliers = 0;
+        $sommePaliers = 0;
+        $premier_palier = 0;
 
-        if (!$temps) {
-            $data = [
-                'status' => 404,
-                'errors' => "Table not found",
-                ];
-            return new JsonResponse($data);
+        foreach ($paliers as $nom => $palier) {
+            if ($palier != 0) {
+                $premier_palier = (int) filter_var($nom, FILTER_SANITIZE_NUMBER_INT);
+                $nombresPaliers += 1;
+                $sommePaliers += $palier;
+            }
         }
 
+        $dtr = 1/2 * $nombresPaliers + $sommePaliers + 1/10 * ($pr - $premier_palier);
+        $dtp = $dp + $dtr;
+
+        $res = array();
+        $res['temps-total-de-remontee'] = $dtr;
+        $res['temps-total-de-plongee'] = $dtp;
+        $res['paliers'] = $paliers;
+
         $response = new Response();
-    
-        $response->setContent(json_encode($temps));
+
+        $response->setContent(json_encode($res));
         $response->headers->set('Content-Type', 'application/json');
         $response->headers->set('Access-Control-Allow-Origin', '*');
         
         return $response;
+        
     }
 }

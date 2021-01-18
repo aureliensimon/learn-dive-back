@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Profondeur;
+
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query;
@@ -27,13 +28,29 @@ class ProfondeurRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findApiByID ($value): ?Profondeur
+    public function findByProfondeur ($profondeur): ?Profondeur
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.id = :val')
-            ->setParameter('val', $value)
+            ->andWhere('p.profondeur = :profondeur')
+            ->setParameter('profondeur', $profondeur)
             ->getQuery()
             ->getOneOrNullResult()
         ;
+    }
+
+    public function findProfondeurApproximation ($table, $profondeur)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQueryBuilder();
+
+        $query->select('p.id, p.profondeur')
+            ->from('App\Entity\Profondeur', 'p')
+            ->where('p.table_plongee_id = :table AND p.profondeur >= :profondeur')
+            ->setMaxResults(1)
+            ->setParameter('profondeur', $profondeur)
+            ->setParameter('table', $table);
+
+        return $query->getQuery()->getResult()[0];   
     }
 }
